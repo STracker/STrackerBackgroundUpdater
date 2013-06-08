@@ -52,8 +52,10 @@ namespace STrackerBackgroundUpdater
                         // Catch exceptions for the background not stop.
                     } 
                 }
-
                 Console.WriteLine("timeout!");
+
+                // Update Episodes.
+                Updater.UpdateEpisodes();
             }
             while (true);
 // ReSharper disable FunctionNeverReturns
