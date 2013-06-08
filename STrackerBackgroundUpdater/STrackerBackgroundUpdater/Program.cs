@@ -1,15 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Program.cs" company="STracker">
+//  Copyright (c) STracker Developers. All rights reserved.
+// </copyright>
+// <summary>
+//  Entry point of the background worker.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace STrackerBackgroundUpdater
 {
-    class Program
+    using System.Configuration;
+
+    /// <summary>
+    /// The program.
+    /// </summary>
+    public class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// The main.
+        /// </summary>
+        /// <param name="args">
+        /// The args.
+        /// </param>
+        public static void Main(string[] args)
         {
+            var timeout = int.Parse(ConfigurationManager.AppSettings["Timeout"]);
+            var work = new DoWork(timeout);
+            work.PerformWork();
         }
     }
 }
