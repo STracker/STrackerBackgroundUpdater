@@ -11,6 +11,11 @@ namespace STrackerBackgroundUpdater
 {
     using System.Configuration;
 
+    using Quartz;
+    using Quartz.Impl;
+
+    using STrackerBackgroundUpdater.Jobs;
+
     /// <summary>
     /// The program.
     /// </summary>
@@ -25,8 +30,11 @@ namespace STrackerBackgroundUpdater
         public static void Main(string[] args)
         {
             var timeout = int.Parse(ConfigurationManager.AppSettings["Timeout"]);
-            var work = new DoWork(timeout);
-            work.PerformWork();
+            var scheduler = new StdSchedulerFactory().GetScheduler();
+            scheduler.Start();
+            var job = JobBuilder.Create<NewEpisodes>().Build();
+            var trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(timeout).RepeatForever()).Build();
+            scheduler.ScheduleJob(job, trigger);
         }
     }
 }

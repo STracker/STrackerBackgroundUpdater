@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STrackerBackgroundUpdater", "STrackerBackgroundUpdater\STrackerBackgroundUpdater.csproj", "{BDF24BDB-CC40-486A-9348-009681F19F55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STrackerBckUpd.NinjectDependencies", "STrackerBckUpd.NinjectDependencies\STrackerBckUpd.NinjectDependencies.csproj", "{0E4EBC06-8539-4B80-AC82-1B51A15DFA91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{BDF24BDB-CC40-486A-9348-009681F19F55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDF24BDB-CC40-486A-9348-009681F19F55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDF24BDB-CC40-486A-9348-009681F19F55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4EBC06-8539-4B80-AC82-1B51A15DFA91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4EBC06-8539-4B80-AC82-1B51A15DFA91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4EBC06-8539-4B80-AC82-1B51A15DFA91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4EBC06-8539-4B80-AC82-1B51A15DFA91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

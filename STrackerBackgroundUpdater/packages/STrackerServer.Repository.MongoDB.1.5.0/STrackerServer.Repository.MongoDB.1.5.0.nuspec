@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>STrackerServer.Repository.MongoDB</id>
+    <version>1.5.0</version>
+    <authors>STracker Developers</authors>
+    <owners>STracker Developers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MongoDB repositories of STrackerServer.</description>
+  </metadata>
+</package>
