@@ -36,7 +36,7 @@ namespace STrackerBackgroundUpdater.Jobs
         /// <summary>
         /// The repository.
         /// </summary>
-        private readonly IEpisodesRepository repository;
+        private readonly INewestEpisodesRepository repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NewEpisodes"/> class.
@@ -46,7 +46,7 @@ namespace STrackerBackgroundUpdater.Jobs
             using (IKernel kernel = new StandardKernel(new ModuleForBackgroundUpdater()))
             {
                 this.manager = kernel.Get<TvShowsInformationManager>();
-                this.repository = kernel.Get<IEpisodesRepository>();
+                this.repository = kernel.Get<INewestEpisodesRepository>();
             }
         }
 

@@ -19,10 +19,12 @@ namespace STrackerBckUpd.NinjectDependencies
     using STrackerBackgroundWorker.ExternalProviders.Core;
     using STrackerBackgroundWorker.ExternalProviders.Providers;
 
+    using STrackerServer.DataAccessLayer.Core;
     using STrackerServer.DataAccessLayer.Core.EpisodesRepositories;
     using STrackerServer.DataAccessLayer.Core.SeasonsRepositories;
     using STrackerServer.DataAccessLayer.Core.TvShowsRepositories;
     using STrackerServer.DataAccessLayer.Core.UsersRepositories;
+    using STrackerServer.Repository.MongoDB.Core;
     using STrackerServer.Repository.MongoDB.Core.EpisodesRepositories;
     using STrackerServer.Repository.MongoDB.Core.SeasonsRepositories;
     using STrackerServer.Repository.MongoDB.Core.TvShowsRepositories;
@@ -57,6 +59,7 @@ namespace STrackerBckUpd.NinjectDependencies
             this.Bind<IEpisodesRepository>().To<EpisodesRepository>();
             this.Bind<IEpisodeCommentsRepository>().To<EpisodeCommentsRepository>();
             this.Bind<IEpisodeRatingsRepository>().To<EpisodeRatingsRepository>();
+            this.Bind<INewestEpisodesRepository>().To<NewestEpisodesRepository>();
 
             // Users stuff dependencies...
             this.Bind<IUsersRepository>().To<UsersRepository>();
