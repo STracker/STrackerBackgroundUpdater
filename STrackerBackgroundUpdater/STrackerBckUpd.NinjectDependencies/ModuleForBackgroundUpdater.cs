@@ -11,6 +11,8 @@ namespace STrackerBckUpd.NinjectDependencies
 {
     using System.Configuration;
 
+    using CloudinaryDotNet;
+
     using MongoDB.Driver;
 
     using Ninject.Modules;
@@ -18,12 +20,15 @@ namespace STrackerBckUpd.NinjectDependencies
     using STrackerBackgroundWorker.ExternalProviders;
     using STrackerBackgroundWorker.ExternalProviders.Core;
     using STrackerBackgroundWorker.ExternalProviders.Providers;
+    using STrackerBackgroundWorker.ExternalProviders.Repositories;
 
     using STrackerServer.DataAccessLayer.Core;
     using STrackerServer.DataAccessLayer.Core.EpisodesRepositories;
     using STrackerServer.DataAccessLayer.Core.SeasonsRepositories;
     using STrackerServer.DataAccessLayer.Core.TvShowsRepositories;
     using STrackerServer.DataAccessLayer.Core.UsersRepositories;
+    using STrackerServer.Logger.Core;
+    using STrackerServer.Logger.SendGrid;
     using STrackerServer.Repository.MongoDB.Core;
     using STrackerServer.Repository.MongoDB.Core.EpisodesRepositories;
     using STrackerServer.Repository.MongoDB.Core.SeasonsRepositories;
@@ -59,7 +64,7 @@ namespace STrackerBckUpd.NinjectDependencies
             this.Bind<IEpisodesRepository>().To<EpisodesRepository>();
             this.Bind<IEpisodeCommentsRepository>().To<EpisodeCommentsRepository>();
             this.Bind<IEpisodeRatingsRepository>().To<EpisodeRatingsRepository>();
-            this.Bind<INewestEpisodesRepository>().To<NewestEpisodesRepository>();
+            this.Bind<ITvShowNewEpisodesRepository>().To<TvShowNewEpisodesRepository>();
 
             // Users stuff dependencies...
             this.Bind<IUsersRepository>().To<UsersRepository>();
@@ -67,6 +72,19 @@ namespace STrackerBckUpd.NinjectDependencies
             // Providers dependencies...
             this.Bind<ITvShowsInformationProvider>().To<TheTvDbProvider>();
             this.Bind<TvShowsInformationManager>().ToSelf().InSingletonScope();
+
+            // IImagRepository dependencies
+            this.Bind<IImageRepository>().To<CloudinaryRepository>();
+
+            // Cloudinary dependencies
+            this.Bind<Account>().ToSelf()
+                .WithConstructorArgument("cloud", ConfigurationManager.AppSettings["Cloudinary:Cloud"])
+                .WithConstructorArgument("apiKey", ConfigurationManager.AppSettings["Cloudinary:ApiKey"])
+                .WithConstructorArgument("apiSecret", ConfigurationManager.AppSettings["Cloudinary:ApiSecret"]);
+
+            this.Bind<Cloudinary>().ToSelf();
+
+            this.Bind<ILogger>().To<SendGridLogger>();
         }
     }
 }

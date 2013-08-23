@@ -9,7 +9,6 @@
 
 namespace STrackerBackgroundUpdater.Jobs
 {
-    using System;
     using System.Collections.Generic;
 
     using Ninject;
@@ -36,7 +35,7 @@ namespace STrackerBackgroundUpdater.Jobs
         /// <summary>
         /// The repository.
         /// </summary>
-        private readonly INewestEpisodesRepository repository;
+        private readonly ITvShowNewEpisodesRepository repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NewEpisodes"/> class.
@@ -46,7 +45,7 @@ namespace STrackerBackgroundUpdater.Jobs
             using (IKernel kernel = new StandardKernel(new ModuleForBackgroundUpdater()))
             {
                 this.manager = kernel.Get<TvShowsInformationManager>();
-                this.repository = kernel.Get<INewestEpisodesRepository>();
+                this.repository = kernel.Get<ITvShowNewEpisodesRepository>();
             }
         }
 
