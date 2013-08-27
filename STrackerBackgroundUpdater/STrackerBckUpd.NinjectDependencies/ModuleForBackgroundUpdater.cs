@@ -20,13 +20,14 @@ namespace STrackerBckUpd.NinjectDependencies
     using STrackerBackgroundWorker.ExternalProviders;
     using STrackerBackgroundWorker.ExternalProviders.Core;
     using STrackerBackgroundWorker.ExternalProviders.Providers;
-    using STrackerBackgroundWorker.ExternalProviders.Repositories;
 
     using STrackerServer.DataAccessLayer.Core;
     using STrackerServer.DataAccessLayer.Core.EpisodesRepositories;
     using STrackerServer.DataAccessLayer.Core.SeasonsRepositories;
     using STrackerServer.DataAccessLayer.Core.TvShowsRepositories;
     using STrackerServer.DataAccessLayer.Core.UsersRepositories;
+    using STrackerServer.ImageConverter.Cloudinary;
+    using STrackerServer.ImageConverter.Core;
     using STrackerServer.Logger.Core;
     using STrackerServer.Logger.SendGrid;
     using STrackerServer.Repository.MongoDB.Core;
@@ -74,7 +75,7 @@ namespace STrackerBckUpd.NinjectDependencies
             this.Bind<TvShowsInformationManager>().ToSelf().InSingletonScope();
 
             // IImagRepository dependencies
-            this.Bind<IImageRepository>().To<CloudinaryRepository>();
+            this.Bind<IImageConverter>().To<CloudinaryConverter>();
 
             // Cloudinary dependencies
             this.Bind<Account>().ToSelf()

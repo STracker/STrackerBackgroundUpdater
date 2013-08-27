@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>STrackerBackgroundWorker.ExternalProviders</id>
-    <version>2.3.1</version>
+    <version>2.3.5</version>
     <title>STrackerBackgroundWorker.ExternalProviders</title>
     <authors>STracker Developers</authors>
     <owners>STracker Developers</owners>
@@ -12,7 +12,7 @@
     <copyright />
     <language />
     <dependencies>
-      <dependency id="STrackerServer.Repository.MongoDB" version="2.3.1" />
+      <dependency id="STrackerServer.Repository.MongoDB" version="2.3.5" />
     </dependencies>
   </metadata>
 </package>

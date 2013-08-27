@@ -20,6 +20,8 @@ namespace STrackerBackgroundUpdater.Jobs
     using STrackerBckUpd.NinjectDependencies;
 
     using STrackerServer.DataAccessLayer.Core.EpisodesRepositories;
+    using STrackerServer.DataAccessLayer.Core.SeasonsRepositories;
+    using STrackerServer.DataAccessLayer.Core.TvShowsRepositories;
     using STrackerServer.DataAccessLayer.DomainEntities;
 
     /// <summary>
@@ -38,6 +40,21 @@ namespace STrackerBackgroundUpdater.Jobs
         private readonly ITvShowNewEpisodesRepository repository;
 
         /// <summary>
+        /// The television shows repository.
+        /// </summary>
+        private readonly ITvShowsRepository tvshowsRepository;
+
+        /// <summary>
+        /// The seasons repository.
+        /// </summary>
+        private readonly ISeasonsRepository seasonsRepository;
+
+        /// <summary>
+        /// The episodes repository.
+        /// </summary>
+        private readonly IEpisodesRepository episodesRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="NewEpisodes"/> class.
         /// </summary>
         public NewEpisodes()
@@ -46,6 +63,9 @@ namespace STrackerBackgroundUpdater.Jobs
             {
                 this.manager = kernel.Get<TvShowsInformationManager>();
                 this.repository = kernel.Get<ITvShowNewEpisodesRepository>();
+                this.seasonsRepository = kernel.Get<ISeasonsRepository>();
+                this.episodesRepository = kernel.Get<IEpisodesRepository>();
+                this.tvshowsRepository = kernel.Get<ITvShowsRepository>();
             }
         }
 
@@ -68,11 +88,50 @@ namespace STrackerBackgroundUpdater.Jobs
           
             List<Episode> episodes;
             provider.GetNewEpisodes(out episodes);
-            
-            // TODO
+
+            foreach (var episode in episodes)
+            {
+                this.CreateEpisode(episode);
+            }
 
             // Delete old episodes from newest episodes document.
             this.repository.DeleteOldEpisodes();
+        }
+
+        /// <summary>
+        /// Creates the episode or updates the old one.
+        /// </summary>
+        /// <param name="episode">
+        /// The episode.
+        /// </param>
+        private void CreateEpisode(Episode episode)
+        {
+            var tvshow = this.tvshowsRepository.Read(episode.Id.TvShowId);
+
+            if (tvshow == null)
+            {
+                return;
+            }
+
+          var seasonId = new Season.SeasonId { TvShowId = episode.Id.TvShowId, SeasonNumber = episode.Id.SeasonNumber };
+
+            var season = this.seasonsRepository.Read(seasonId);
+
+            if (season == null)
+            {
+                this.seasonsRepository.Create(new Season(seasonId));
+            }
+
+            var oldEpisode = this.episodesRepository.Read(episode.Id);
+
+            if (oldEpisode == null)
+            {
+                this.episodesRepository.Create(episode);
+            }
+            else
+            {
+                this.episodesRepository.Update(episode);
+            }
         }
     }
 }
