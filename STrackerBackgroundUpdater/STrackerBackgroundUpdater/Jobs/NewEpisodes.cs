@@ -23,6 +23,7 @@ namespace STrackerBackgroundUpdater.Jobs
     using STrackerServer.DataAccessLayer.Core.SeasonsRepositories;
     using STrackerServer.DataAccessLayer.Core.TvShowsRepositories;
     using STrackerServer.DataAccessLayer.DomainEntities;
+    using STrackerServer.Logger.Core;
 
     /// <summary>
     /// The do work.
@@ -55,6 +56,11 @@ namespace STrackerBackgroundUpdater.Jobs
         private readonly IEpisodesRepository episodesRepository;
 
         /// <summary>
+        /// The logger.
+        /// </summary>
+        private readonly ILogger logger;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="NewEpisodes"/> class.
         /// </summary>
         public NewEpisodes()
@@ -66,6 +72,7 @@ namespace STrackerBackgroundUpdater.Jobs
                 this.seasonsRepository = kernel.Get<ISeasonsRepository>();
                 this.episodesRepository = kernel.Get<IEpisodesRepository>();
                 this.tvshowsRepository = kernel.Get<ITvShowsRepository>();
+                this.logger = kernel.Get<ILogger>();
             }
         }
 
@@ -113,7 +120,7 @@ namespace STrackerBackgroundUpdater.Jobs
                 return;
             }
 
-          var seasonId = new Season.SeasonId { TvShowId = episode.Id.TvShowId, SeasonNumber = episode.Id.SeasonNumber };
+            var seasonId = new Season.SeasonId { TvShowId = episode.Id.TvShowId, SeasonNumber = episode.Id.SeasonNumber };
 
             var season = this.seasonsRepository.Read(seasonId);
 
@@ -132,6 +139,8 @@ namespace STrackerBackgroundUpdater.Jobs
             {
                 this.episodesRepository.Update(episode);
             }
+
+            this.logger.Debug("Updater:CreateEpisode", "None", string.Format("TvShow:{0}, Season:{1}, Episode:{2}", episode.Id.TvShowId, episode.Id.SeasonNumber, episode.Id.EpisodeNumber));
         }
     }
 }

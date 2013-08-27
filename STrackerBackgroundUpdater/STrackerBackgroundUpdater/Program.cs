@@ -33,7 +33,7 @@ namespace STrackerBackgroundUpdater
             var scheduler = new StdSchedulerFactory().GetScheduler();
             scheduler.Start();
             var job = JobBuilder.Create<NewEpisodes>().Build();
-            var trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(timeout).RepeatForever()).Build();
+            var trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(timeout).RepeatForever()).Build();
             scheduler.ScheduleJob(job, trigger);
         }
     }
